@@ -1,4 +1,7 @@
 use std::io;
+use rand::RngExt;
+use rand::rngs::StdRng;
+use rand::{SeedableRng, Rng};
 //struct Menu {
 	
 fn main() {
@@ -42,14 +45,24 @@ fn main() {
 			}
 		}
 
+	fn roll_die(seed: u64) -> u64 {
+		let mut rand = StdRng::seed_from_u64(seed);
+		let num : u64 = rand.random_range(1..=6);
+		num
+		};
+	
 
+
+
+	
 //	while quit = False
 //		println!("
 //	println!("
 	println!("{}", print_menu());
 	let number = read_number(1,5);
-	println!("{}", number)
-
+	println!("{}", number);
+	let roll = roll_die(6);
+	println!("{}", roll)
 
 }
 
