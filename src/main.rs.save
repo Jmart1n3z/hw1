@@ -1,0 +1,3 @@
+fn main() {
+    let start_gold = 100
+}
