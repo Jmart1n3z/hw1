@@ -1,7 +1,7 @@
 use std::io;
 use rand::RngExt;
 use rand::rngs::StdRng;
-use rand::{SeedableRng, Rng};
+use rand::SeedableRng;
 	
 fn main() {
 	let mut gold : u64 = 100;
@@ -9,14 +9,17 @@ fn main() {
 	let mut food : u64 = 0;
 	let mut day : u64 = 1;
 	let mut roll_count : u64 = 0;
-	let mut quit : bool = false;
+	let mut quit : bool = true;
 	let mut sd = rand::rng();
 	let seed = sd.random_range(1..=9999);
 
 
-	fn print_menu() -> String {
-		let menu = format!("1) Buy food\n2) Hunt\n3) Trade with caravan\n4) View status\n5) Quit");
-		menu
+	fn print_menu() {
+		println!("1) Buy food");
+		println!("2) Hunt");
+		println!("3) Trade with caravan");
+		println!("4) View status");
+		println!("5) Quit")
 		}
 
 	fn read_number(min: u64, max: u64) -> u64 {
@@ -50,7 +53,7 @@ fn main() {
 		let mut rand = StdRng::seed_from_u64(seed);
 		let num : u64 = rand.random_range(1..=6);
 		num
-		};
+		}
 	
 	fn roll_many(seed: u64, count: u64) -> u64 {
 		let mut sum = 0;
@@ -78,29 +81,80 @@ fn main() {
 		gold >= cost
 		}
 
-	fn print_status(gold: u64, food: u64, day: u64) -> String {
-		let status = format!("Gold is {}\nFood is {}\nDay is {}", gold, food, day);
-		status
+	fn print_status(gold: u64, food: u64, day: u64) {
+		println!("Gold is {}", gold);
+		println!("Food is {}", food);
+		println!("Day is {}", day)
 		}
 
 
+	println!("Welcome to Trail Trader");
+	while quit {
+		loop {
+			println!("");
 
+			print_menu();
 
-//	while quit = False
-//		println!("
-//	println!("
-	println!("{}", print_menu());
-	let number = read_number(1,5);
-	println!("{}", number);
-	let mut rng = rand::rng();
-	let roll : i32 = rng.random_range(1..=6);
-	food = food + hunt_food(roll.try_into().unwrap());
-	println!("{}", food);
-	println!("{}", can_afford(2,5));
-
-	println!("{}", print_status(gold, food, day));
+			println!("");
+			
+			let number = read_number(1,5);
 	
-	let rolls = roll_many(seed, 3);
-	println!("{}", rolls)
-}
+			println!("");
+					
+			if number == 1 {
+				if can_afford(gold, food_price) {
+					println!("How many rations do you want to buy?");
+					let mut input = String::new();
+					io::stdin()
+						.read_line(&mut input)
+						.expect("Failed to read line");
+					let number : u64 = match input.trim().parse() {
+						Ok(n) => n,
+						Err(_) => {
+							println!("Invalid input, Try again");
+							println!("");
+							continue;
+							}
+						};
+					food = food + number;
+					gold = gold - food_price*number;
+					day = day + 1;
+					continue
+				} else {
+					println!("You can't afford to buy food");
+					println!("");
+					continue
+				}
 
+			} else if number == 2 {
+				println!("Hunt food: ");
+				let roll = roll_die(seed + roll_count);
+				roll_count = roll_count + 1;
+				let fd_gain = hunt_food(roll);
+				food = food + fd_gain;
+				day = day + 1;
+				println!("Food gained: {}", fd_gain);
+				continue
+			
+			} else if number == 3 {
+				println!("Trade with caravan");
+				let sum = roll_many(seed + roll_count, 3);
+				roll_count = roll_count + 3;
+				let gld_gain = sum * 2;
+				gold = gold + gld_gain;
+				day = day + 1;
+				println!("You gained {} gold", gld_gain);
+				continue
+			} else if number == 4 {
+				print_status(gold, food, day);
+				continue
+			} else if number == 5 {
+				println!("The game has ended!");
+				print_status(gold, food, day);
+				quit = false;
+				break
+			}
+			}
+		}
+		println!("Thanks for playing!")
+}
