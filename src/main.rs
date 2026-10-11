@@ -51,18 +51,35 @@ fn main() {
 		num
 		};
 	
+//	fn roll_many(seed: u64, count: u64) -> u64 {
+//		let mut sum = 0;
+//		for i in 0.. count {
+//			sum = seed + seed + 1 + 
+//			}
+//		};
 
-
-
-	
+	fn hunt_food(roll: u64) -> u64 {
+		let mut fd_gain : u64 = 0;
+		if roll == 1 {
+			fd_gain = 0
+		} else if roll == 2 || roll == 3 {
+			fd_gain = 10
+		} else if roll == 4 || roll == 5 {
+			fd_gain = 20
+		} else if roll == 6 {
+			fd_gain = 40
+		}
+		fd_gain
+		}
 //	while quit = False
 //		println!("
 //	println!("
 	println!("{}", print_menu());
 	let number = read_number(1,5);
 	println!("{}", number);
-	let roll = roll_die(6);
-	println!("{}", roll)
-
+	let mut rng = rand::rng();
+	let roll : i32 = rng.random_range(1..=6);
+	food = food + hunt_food(roll.try_into().unwrap());
+	println!("{}", food)
 }
 
