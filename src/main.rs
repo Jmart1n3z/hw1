@@ -2,19 +2,8 @@ use std::io;
 use rand::RngExt;
 use rand::rngs::StdRng;
 use rand::SeedableRng;
-	
-fn main() {
-	let mut gold : u64 = 100;
-	let food_price : u64 = 5;
-	let mut food : u64 = 0;
-	let mut day : u64 = 1;
-	let mut roll_count : u64 = 0;
-	let mut quit : bool = true;
-	let mut sd = rand::rng();
-	let seed = sd.random_range(1..=9999);
 
-
-	fn print_menu() {
+fn print_menu() {
 		println!("1) Buy food");
 		println!("2) Hunt");
 		println!("3) Trade with caravan");
@@ -86,7 +75,16 @@ fn main() {
 		println!("Food is {}", food);
 		println!("Day is {}", day)
 		}
-
+	
+fn main() {
+	let mut gold : u64 = 100;
+	let food_price : u64 = 5;
+	let mut food : u64 = 0;
+	let mut day : u64 = 1;
+	let mut roll_count : u64 = 0;
+	let mut quit : bool = true;
+	let mut sd = rand::rng();
+	let seed = sd.random_range(1..=9999);
 
 	println!("Welcome to Trail Trader");
 	while quit {
