@@ -71,6 +71,17 @@ fn main() {
 		}
 		fd_gain
 		}
+
+	fn can_afford(gold: u64, cost: u64) -> bool {
+		gold >= cost
+		}
+
+
+
+
+
+
+
 //	while quit = False
 //		println!("
 //	println!("
@@ -80,6 +91,9 @@ fn main() {
 	let mut rng = rand::rng();
 	let roll : i32 = rng.random_range(1..=6);
 	food = food + hunt_food(roll.try_into().unwrap());
-	println!("{}", food)
+	println!("{}", food);
+	println!("{}", can_afford(2,5))
+
+
 }
 
