@@ -2,17 +2,18 @@ use std::io;
 use rand::RngExt;
 use rand::rngs::StdRng;
 use rand::{SeedableRng, Rng};
-//struct Menu {
 	
 fn main() {
 	let mut gold : u64 = 100;
 	let food_price : u64 = 5;
-	let max_seed : u64 = 9999;
 	let mut food : u64 = 0;
 	let mut day : u64 = 1;
 	let mut roll_count : u64 = 0;
 	let mut quit : bool = false;
-	
+	let mut sd = rand::rng();
+	let seed = sd.random_range(1..=9999);
+
+
 	fn print_menu() -> String {
 		let menu = format!("1) Buy food\n2) Hunt\n3) Trade with caravan\n4) View status\n5) Quit");
 		menu
@@ -51,12 +52,13 @@ fn main() {
 		num
 		};
 	
-//	fn roll_many(seed: u64, count: u64) -> u64 {
-//		let mut sum = 0;
-//		for i in 0.. count {
-//			sum = seed + seed + 1 + 
-//			}
-//		};
+	fn roll_many(seed: u64, count: u64) -> u64 {
+		let mut sum = 0;
+		for i in 0.. count {
+			sum = sum + roll_die(seed + i) 
+			}
+		sum as u64
+		}
 
 	fn hunt_food(roll: u64) -> u64 {
 		let mut fd_gain : u64 = 0;
@@ -96,7 +98,9 @@ fn main() {
 	println!("{}", food);
 	println!("{}", can_afford(2,5));
 
-	println!("{}", print_status(gold, food, day))
-
+	println!("{}", print_status(gold, food, day));
+	
+	let rolls = roll_many(seed, 3);
+	println!("{}", rolls)
 }
 
