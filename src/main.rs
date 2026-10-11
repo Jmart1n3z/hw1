@@ -76,8 +76,10 @@ fn main() {
 		gold >= cost
 		}
 
-
-
+	fn print_status(gold: u64, food: u64, day: u64) -> String {
+		let status = format!("Gold is {}\nFood is {}\nDay is {}", gold, food, day);
+		status
+		}
 
 
 
@@ -92,8 +94,9 @@ fn main() {
 	let roll : i32 = rng.random_range(1..=6);
 	food = food + hunt_food(roll.try_into().unwrap());
 	println!("{}", food);
-	println!("{}", can_afford(2,5))
+	println!("{}", can_afford(2,5));
 
+	println!("{}", print_status(gold, food, day))
 
 }
 
